@@ -10,9 +10,8 @@
 #define USE_LEDLIB 0                  // Require FastLED instead of Adafruit NeoPixel library
 #ifndef WREACTOR32_2023
 #define USE_SDCARD                    // Enable SD card support
-#else
-#define USE_CONTROLLER
 #endif
+#define USE_CONTROLLER
 #define SHOW_UPTIME
 
 #define USE_LOGICS
@@ -46,6 +45,8 @@
 
 #define PREFERENCE_MARCWIFI_ENABLED     "mwifi"
 #define PREFERENCE_MARCWIFI_SERIAL_PASS "mwifipass"
+
+#define FASTLED_RMT_MAX_CHANNELS 1    // Fixes the mysterious hang
 
 ///////////////////////////////////
 
@@ -143,6 +144,7 @@
 #include "dome/LogicEngineController.h"
 #include "ServoDispatchPCA9685.h"
 #include "ServoSequencer.h"
+#include "dome/NeoPSI.h"
 
 #include <Preferences.h>
 
@@ -182,6 +184,9 @@ LogicEngineRLDType sRLDType;
 #ifdef USE_CONTROLLER
 LogicEngineControllerDefault sController(preferences);
 #endif
+
+AstroPixelFrontPSI<> frontPSI(LogicEngineFrontPSIDefault, 4);
+AstroPixelRearPSI<> rearPSI(LogicEngineRearPSIDefault, 5);
 
 void FLD_init()
 {
@@ -742,7 +747,7 @@ void setup()
     }
 
     // Initialize FLD
-    FLD_selectType(preferences.getUChar(PREFERENCE_FLD, kLogicEngineDeathStarFLD));
+    FLD_selectType(preferences.getUChar(PREFERENCE_FLD, kLogicEngineRGBWFLD)); //FOR KITS PRIOR TO 2025, THIS WOULD BE kLogicEngineDeathStarFLD
     FLD_init();
 
     // Initialize RLD

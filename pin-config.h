@@ -64,9 +64,16 @@
 #define I2C_SCL               22
 #define SPI_MOSI              23  // VSPI MOSI
 #define NONEXISTENT_PIN_24    24
+
+#define FRONT_PSI_PIN         26
+#define REAR_PSI_PIN          27
+
+#if !defined(FRONT_PSI_PIN) && !defined(REAR_PSI_PIN)
 #define I2S_DOUT              25  // I2S audio output
 #define I2S_LRC               26  // I2S audio output
 #define I2S_BCLK              27  // I2S audio output
+#endif
+
 #define NONEXISTENT_PIN_28    28
 #define NONEXISTENT_PIN_29    29
 #define NONEXISTENT_PIN_30    30
